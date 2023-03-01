@@ -16,16 +16,16 @@ const navLinks = [
 
 export default function NavBar() {
   const pathname = usePathname();
-  const disabled = pathname === "/";
+
   return (
-    <div className="bg-purple-500">
+    <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500">
       <div className="flex justify-between container mx-auto py-5 items-center">
         <div>
           <Link
             href="/"
             className="shadow py-2 px-4 bg-white/10 rounded-md text-white"
           >
-            Moralis Web3 {pathname}
+            Moralis Web3 API - Playground
           </Link>
         </div>
         <nav>

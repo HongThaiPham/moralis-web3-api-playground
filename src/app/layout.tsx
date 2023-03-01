@@ -1,3 +1,4 @@
+import MoralisProvider from "@/components/MoralisProvider";
 import NavBar from "@/components/NavBar";
 import "./globals.css";
 
@@ -13,11 +14,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <NavBar />
-
-        {children}
-      </body>
+      <MoralisProvider>
+        <body>
+          <NavBar />
+          <main>
+            <div className="container mx-auto py-5">{children}</div>
+          </main>
+        </body>
+      </MoralisProvider>
     </html>
   );
 }
