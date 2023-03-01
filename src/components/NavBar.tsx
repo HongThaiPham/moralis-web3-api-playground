@@ -12,6 +12,10 @@ const navLinks = [
     name: "About",
     href: "/about",
   },
+  {
+    name: "EVM API",
+    href: "/evm",
+  },
 ];
 
 export default function NavBar() {
