@@ -1,6 +1,6 @@
 import * as jwt from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
-export default async function GET(req: NextRequest) {
+export async function GET(req: NextRequest) {
   const token = req.cookies.get("jwt");
   if (!token) return new Response(null, { status: 403 });
 

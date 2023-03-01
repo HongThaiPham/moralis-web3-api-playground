@@ -15,7 +15,6 @@ Moralis.start({
 import * as jwt from "jsonwebtoken";
 
 export async function POST(req: NextRequest) {
-  console.log("verify.ts");
   try {
     const { message, signature } = await req.json();
 
@@ -27,21 +26,18 @@ export async function POST(req: NextRequest) {
 
     const authData = result.toJSON();
 
-    console.log("authData", authData);
-
     let { data: user } = await supabase
       .from("users")
       .select("*")
       .eq("moralis_provider_id", authData.profileId)
       .single();
 
-    console.log("user", user);
-
     if (!user) {
       const response = await supabase
         .from("users")
         .insert({ moralis_provider_id: authData.profileId, metadata: authData })
         .single();
+
       user = response.data;
     }
 
@@ -55,23 +51,17 @@ export async function POST(req: NextRequest) {
       process.env.SUPABASE_JWT!
     );
 
-    console.log("token", token);
-
-    return NextResponse.json(user, {
-      headers: {
-        "Set-Cookie": `jwt=${token}; path=/; sameSite=lax; httpOnly=true`,
+    return NextResponse.json(
+      {
+        user,
       },
-    });
-    // .cookies.set("jwt", token, {
-    //   path: "/",
-    //   sameSite: "lax",
-    //   httpOnly: true,
-    // });
-
-    console.log("xxx", xxx);
-    return xxx;
+      {
+        headers: {
+          "Set-Cookie": `jwt=${token}; HttpOnly; Path=/; SameSite=lax;`,
+        },
+      }
+    );
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
       { error: (error as Error).message },
       {

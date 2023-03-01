@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
       ...config,
     });
 
-    return NextResponse.json({ message });
+    return NextResponse.json(message);
   } catch (error) {
     return NextResponse.json(
       { error: (error as Error).message },

@@ -5,7 +5,9 @@ export default function Page() {
     <div>
       <h1>Authentication Method</h1>
       <p>Choose your authentication method:</p>
-      <AuthByMetamask />
+      <div className="border border-white/20 p-3">
+        <AuthByMetamask />
+      </div>
     </div>
   );
 }
