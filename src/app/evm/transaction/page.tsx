@@ -10,6 +10,11 @@ export default function Page() {
         href="/evm/transaction/getWalletTransactionsVerbose"
         label="Get verbose transactions of an address"
       />
+      <LinkButton
+        className="shadow-md"
+        href="/evm/transaction/getTransaction"
+        label="Get a transaction by transaction hash"
+      />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import Button from "@/components/Button";
 import InputText from "@/components/InputText";
+import isMintNftTransaction from "@/utils/isMintNftTransaction";
 import { useEvmWalletTransactionsVerbose } from "@moralisweb3/next";
 import clsx from "clsx";
 import { EvmTransaction, EvmTransactionLog } from "moralis/common-evm-utils";
@@ -34,19 +35,6 @@ export default function Page() {
     }
   };
 
-  const isMintNft = (logs: EvmTransactionLog[]) => {
-    if (logs && logs.length > 0) {
-      const findLog = logs.find(
-        (log) =>
-          log.topics[0] === process.env.NEXT_PUBLIC_TOPIC_MINT &&
-          log.topics[1] === process.env.NEXT_PUBLIC_TOPIC_ZERO &&
-          log.topics[3]
-      );
-      return findLog ? parseInt(findLog.topics[3]!, 16) : null;
-    }
-    return null;
-  };
-
   return (
     <div className="space-y-3">
       <InputText
@@ -63,7 +51,7 @@ export default function Page() {
         {transactions &&
           transactions.length > 0 &&
           transactions.map((ts) => {
-            const nftTokenId = isMintNft(ts.logs);
+            const nftTokenId = isMintNftTransaction(ts.logs);
             return (
               <div
                 key={ts.hash}
@@ -84,7 +72,7 @@ export default function Page() {
                 {nftTokenId != null && (
                   <div>
                     Transaction mint NFT token id:{" "}
-                    <span className="font-bold">{nftTokenId}</span>
+                    <span className="font-bold">{nftTokenId.tokenId}</span>
                   </div>
                 )}
               </div>
